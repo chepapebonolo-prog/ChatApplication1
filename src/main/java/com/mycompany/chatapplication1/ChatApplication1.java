@@ -54,6 +54,7 @@ public class ChatApplication1 {
         System.out.print("Username: ");
         String username = scanner.nextLine();
         
+        // Handle user login process
         System.out.print("Password: ");
         String password = scanner.nextLine();
         
