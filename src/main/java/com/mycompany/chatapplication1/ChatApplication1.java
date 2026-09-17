@@ -8,7 +8,7 @@ package com.mycompany.chatapplication1;
  *
  * @author Student
  */
-
+// Display main menu options
 
 import java.util.Scanner;
 
