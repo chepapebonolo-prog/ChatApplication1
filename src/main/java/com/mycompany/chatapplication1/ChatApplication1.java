@@ -11,7 +11,7 @@ package com.mycompany.chatapplication1;
 // Display main menu options
 
 import java.util.Scanner;
-
+// Process user menu selection
 public class ChatApplication1 {
     
     public static void main(String[] args) {
