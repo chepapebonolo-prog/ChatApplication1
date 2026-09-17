@@ -29,7 +29,7 @@ public class ChatApplication1 {
             System.out.print("Select option: ");
             
             String choice = scanner.nextLine();
-            
+            // Close scanner resource
             switch (choice) {
                 case "1":
                     register(scanner, user);
