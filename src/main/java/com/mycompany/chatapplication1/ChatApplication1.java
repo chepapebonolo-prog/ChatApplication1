@@ -45,7 +45,7 @@ public class ChatApplication1 {
                     System.out.println("Invalid choice");
             }
         }
-        
+        // Collect user registration details
         scanner.close();
     }
     
