@@ -37,6 +37,23 @@ public class Message {
         }
         return "Cell phone number is incorrectly formatted or does not contain an international code. Please correct the number and try again.";
     }
+            public String createMessageHash() {
+        String[] words = messageText.trim().split(" ");
+        String first = cleanWord(words[0]);
+        String last = cleanWord(words[words.length - 1]);
+        messageHash = (messageID.substring(0, 2) + ":" + messageNumber + ":" + first + last).toUpperCase();
+        return messageHash;
+    }
+
+    private String cleanWord(String word) {
+        String result = "";
+        for (int i = 0; i < word.length(); i++) {
+            if (Character.isLetterOrDigit(word.charAt(i))) {
+                result = result + word.charAt(i);
+            }
+        }
+        return result;
+    }
 
     public String getMessageID() {
         return messageID;
