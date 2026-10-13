@@ -54,6 +54,19 @@ public class Message {
         }
         return result;
     }
+    
+        public String sentMessage(int choice) {
+        if (choice == 1) {
+            return "Message successfully sent.";
+        }
+        if (choice == 2) {
+            return "Press 0 to delete the message.";
+        }
+        if (choice == 3) {
+            return "Message successfully stored.";
+        }
+        return "Invalid option.";
+    }
 
     public String getMessageID() {
         return messageID;
