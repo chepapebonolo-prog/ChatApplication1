@@ -13,6 +13,7 @@ public class Message {
     private String messageText;
     private String messageHash;
 
+    // Creates a message and generates a random 10-digit ID
     public Message(int messageNumber, String recipient, String messageText) {
         Random random = new Random();
         long id = 1000000000L + (long) (random.nextDouble() * 9000000000L);
@@ -21,10 +22,11 @@ public class Message {
         this.recipient = recipient;
         this.messageText = messageText;
     }
-
+    // Checks the message ID is no more than ten characters
     public boolean checkMessageID() {
         return messageID.length() <= 10;
     }
+    // Checks the number has an international code and is valid
         public String checkRecipientCell() {
         boolean valid = recipient.startsWith("+") && recipient.length() > 1 && recipient.length() <= 13;
         for (int i = 1; i < recipient.length(); i++) {
@@ -37,6 +39,7 @@ public class Message {
         }
         return "Cell phone number is incorrectly formatted or does not contain an international code. Please correct the number and try again.";
     }
+        // Builds the hash from the ID, message number and first and last words
             public String createMessageHash() {
         String[] words = messageText.trim().split(" ");
         String first = cleanWord(words[0]);
@@ -44,7 +47,7 @@ public class Message {
         messageHash = (messageID.substring(0, 2) + ":" + messageNumber + ":" + first + last).toUpperCase();
         return messageHash;
     }
-
+// Removes punctuation from a word
     private String cleanWord(String word) {
         String result = "";
         for (int i = 0; i < word.length(); i++) {
@@ -54,7 +57,8 @@ public class Message {
         }
         return result;
     }
-    
+     // Returns the result of the send, disregard or store choice
+    // Returns the message ID
         public String sentMessage(int choice) {
         if (choice == 1) {
             return "Message successfully sent.";
