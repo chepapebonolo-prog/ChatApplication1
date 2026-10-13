@@ -25,6 +25,18 @@ public class Message {
     public boolean checkMessageID() {
         return messageID.length() <= 10;
     }
+        public String checkRecipientCell() {
+        boolean valid = recipient.startsWith("+") && recipient.length() > 1 && recipient.length() <= 13;
+        for (int i = 1; i < recipient.length(); i++) {
+            if (!Character.isDigit(recipient.charAt(i))) {
+                valid = false;
+            }
+        }
+        if (valid) {
+            return "Cell phone number successfully captured.";
+        }
+        return "Cell phone number is incorrectly formatted or does not contain an international code. Please correct the number and try again.";
+    }
 
     public String getMessageID() {
         return messageID;
