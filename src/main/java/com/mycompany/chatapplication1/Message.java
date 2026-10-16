@@ -61,7 +61,7 @@ public class Message {
         return result;
     }
      // Returns the result of the send, disregard or store choice
-    // Returns the message ID
+    
         public String sentMessage(int choice) {
         if (choice == 1) {
             return "Message successfully sent.";
@@ -73,6 +73,14 @@ public class Message {
             return "Message successfully stored.";
         }
         return "Invalid option.";
+    }
+            // Adds this message to the list of sent messages
+    public void addToSent() {
+        sentMessages.add(this);
+    }
+        // Returns the total number of messages sent
+    public static int returnTotalMessages() {
+        return sentMessages.size();
     }
 
     public String getMessageID() {
