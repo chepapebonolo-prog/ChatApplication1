@@ -82,6 +82,18 @@ public class Message {
     public static int returnTotalMessages() {
         return sentMessages.size();
     }
+        // Returns the details of all sent messages
+    public static String printMessages() {
+        String result = "";
+        for (int i = 0; i < sentMessages.size(); i++) {
+            Message m = sentMessages.get(i);
+            result = result + "Message ID: " + m.messageID + "\n"
+                    + "Message Hash: " + m.messageHash + "\n"
+                    + "Recipient: " + m.recipient + "\n"
+                    + "Message: " + m.messageText + "\n\n";
+        }
+        return result;
+    }
 
     public String getMessageID() {
         return messageID;
