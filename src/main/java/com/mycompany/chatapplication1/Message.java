@@ -5,6 +5,7 @@
 package com.mycompany.chatapplication1;
 
 import java.util.Random;
+import java.util.ArrayList;
 
 public class Message {
     private String messageID;
@@ -12,6 +13,8 @@ public class Message {
     private String recipient;
     private String messageText;
     private String messageHash;
+        // Holds every message sent while the program runs
+    private static ArrayList<Message> sentMessages = new ArrayList<>();
 
     // Creates a message and generates a random 10-digit ID
     public Message(int messageNumber, String recipient, String messageText) {
