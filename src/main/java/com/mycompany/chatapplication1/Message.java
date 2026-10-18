@@ -107,6 +107,25 @@ public class Message {
     public static String printMessages() {
                 return sentMessages;
     }
+        // Saves this message to a JSON file
+    public void storeMessage() {
+        String safeText = messageText.replace("\"", "\\\"");
+        try {
+            FileWriter writer = new FileWriter("messages.json", true);
+            writer.write("{\"messageID\": \"" + messageID + "\", \"messageHash\": \"" + messageHash
+                    + "\", \"recipient\": \"" + recipient + "\", \"message\": \"" + safeText + "\"}\n");
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Could not store the message.");
+        }
+    }
+        // Returns the full details of this message
+    public String messageDetails() {
+        return "Message ID: " + messageID + "\n"
+                + "Message Hash: " + messageHash + "\n"
+                + "Recipient: " + recipient + "\n"
+                + "Message: " + messageText;
+    }
 
     public String getMessageID() {
         return messageID;
