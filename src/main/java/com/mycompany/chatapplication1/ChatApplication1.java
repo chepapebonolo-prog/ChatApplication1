@@ -113,6 +113,8 @@ public class ChatApplication1 {
                     System.out.println(message.sentMessage(sendChoice));
                     if (sendChoice == 1) {
                         message.addToSent();
+                     // Shows the full details of the sent message
+                        System.out.println(message.messageDetails());
                     } else if (sendChoice == 2) {
                         scanner.nextLine();
                     } else if (sendChoice == 3) {
