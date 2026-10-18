@@ -76,5 +76,27 @@ public class ChatApplication1 {
         boolean isLoggedIn = user.loginUser(username, password);
         String result = user.returnLoginStatus(isLoggedIn);
         System.out.println("\n" + result);
+                if (isLoggedIn) {
+            quickChat(scanner);
+        }
+    }
+        // Runs the QuickChat menu after a successful login
+    private static void quickChat(Scanner scanner) {
+        System.out.println("\nWelcome to QuickChat.");
+        boolean chatting = true;
+        while (chatting) {
+            System.out.println("\n1) Send Messages");
+            System.out.println("2) Show recently sent messages");
+            System.out.println("3) Quit");
+            System.out.print("Select option: ");
+            String option = scanner.nextLine();
+            if (option.equals("2")) {
+                System.out.println("Coming Soon.");
+            } else if (option.equals("3")) {
+                chatting = false;
+            } else if (!option.equals("1")) {
+                System.out.println("Invalid choice");
+            }
+        }
     }
 }
