@@ -121,6 +121,8 @@ public class ChatApplication1 {
                         message.storeMessage();
                     }
                     messagesEntered = messagesEntered + 1;
+                                            // Shows the full details of the sent message
+                        System.out.println(message.messageDetails());
                 } else {
                     System.out.println("You have entered all your messages.");
                 }
