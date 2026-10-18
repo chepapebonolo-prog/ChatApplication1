@@ -120,7 +120,11 @@ public class ChatApplication1 {
                     } else if (sendChoice == 3) {
                         message.storeMessage();
                     }
-                    messagesEntered = messagesEntered + 1;              
+                    messagesEntered = messagesEntered + 1;
+                                        // Shows the total sent once all the messages have been entered
+                    if (messagesEntered == numMessages) {
+                        System.out.println("Total messages sent: " + Message.returnTotalMessages());
+                    }
                 } else {
                     System.out.println("You have entered all your messages.");
                 }
