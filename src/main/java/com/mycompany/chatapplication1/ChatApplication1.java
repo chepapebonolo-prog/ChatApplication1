@@ -98,8 +98,37 @@ public class ChatApplication1 {
                 System.out.println("Coming Soon.");
             } else if (option.equals("3")) {
                 chatting = false;
-            } else if (!option.equals("1")) {
+            } else if (option.equals("1")) {
+                // Collects a message and shows its generated ID
+                if (messagesEntered < numMessages) {
+                    Message message = enterMessage(scanner, messagesEntered);
+                    message.createMessageHash();
+                    System.out.println("Message ID generated: " + message.getMessageID());
+                    messagesEntered = messagesEntered + 1;
+                } else {
+                    System.out.println("You have entered all your messages.");
+                }
+            } else {
                 System.out.println("Invalid choice");
+            }
+        }
+    }
+    // Collects one message and repeats until the recipient and text are valid
+
+    private static Message enterMessage(Scanner scanner, int messageNumber) {
+        while (true) {
+            System.out.print("Recipient cell number: ");
+            String recipient = scanner.nextLine();
+            System.out.print("Message: ");
+            String text = scanner.nextLine();
+            Message message = new Message(messageNumber, recipient, text);
+            String cellResult = message.checkRecipientCell();
+            String lengthResult = message.checkMessageLength();
+            System.out.println(cellResult);
+            System.out.println(lengthResult);
+            if (cellResult.equals("Cell phone number successfully captured.")
+                    && lengthResult.equals("Message ready to send.")) {
+                return message;
             }
         }
     }
