@@ -30,7 +30,16 @@ public class Message {
     }
     // Checks the message ID is no more than ten characters
     public boolean checkMessageID() {
+            
         return messageID.length() <= 10;
+    }
+        // Checks the message is no more than 250 characters
+    public String checkMessageLength() {
+        if (messageText.length() <= 250) {
+            return "Message ready to send.";
+        }
+        int extra = messageText.length() - 250;
+        return "Message exceeds 250 characters by " + extra + "; please reduce the size.";
     }
     // Checks the number has an international code and is valid
         public String checkRecipientCell() {
