@@ -6,6 +6,8 @@ package com.mycompany.chatapplication1;
 
 import java.util.Random;
 import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Message {
     private String messageID;
@@ -13,9 +15,10 @@ public class Message {
     private String recipient;
     private String messageText;
     private String messageHash;
-        // Holds every message sent while the program runs
-    private static ArrayList<Message> sentMessages = new ArrayList<>();
-
+           // Holds the details of every message sent while the program runs
+    private static String sentMessages = "";
+    // Counts the messages sent
+    private static int totalSent = 0; 
     // Creates a message and generates a random 10-digit ID
     public Message(int messageNumber, String recipient, String messageText) {
         Random random = new Random();
@@ -44,9 +47,14 @@ public class Message {
     }
         // Builds the hash from the ID, message number and first and last words
             public String createMessageHash() {
-        String[] words = messageText.trim().split(" ");
-        String first = cleanWord(words[0]);
-        String last = cleanWord(words[words.length - 1]);
+                String text = messageText.trim();
+        String first = text;
+        if (text.indexOf(" ") != -1) {
+            first = text.substring(0, text.indexOf(" "));
+        }
+        String last = text.substring(text.lastIndexOf(" ") + 1);
+        first = cleanWord(first);
+        last = cleanWord(last);
         messageHash = (messageID.substring(0, 2) + ":" + messageNumber + ":" + first + last).toUpperCase();
         return messageHash;
     }
@@ -76,23 +84,19 @@ public class Message {
     }
             // Adds this message to the list of sent messages
     public void addToSent() {
-        sentMessages.add(this);
+                sentMessages = sentMessages + "Message ID: " + messageID + "\n"
+                + "Message Hash: " + messageHash + "\n"
+                + "Recipient: " + recipient + "\n"
+                + "Message: " + messageText + "\n\n";
+        totalSent = totalSent + 1;
     }
         // Returns the total number of messages sent
     public static int returnTotalMessages() {
-        return sentMessages.size();
+                return totalSent;
     }
         // Returns the details of all sent messages
     public static String printMessages() {
-        String result = "";
-        for (int i = 0; i < sentMessages.size(); i++) {
-            Message m = sentMessages.get(i);
-            result = result + "Message ID: " + m.messageID + "\n"
-                    + "Message Hash: " + m.messageHash + "\n"
-                    + "Recipient: " + m.recipient + "\n"
-                    + "Message: " + m.messageText + "\n\n";
-        }
-        return result;
+                return sentMessages;
     }
 
     public String getMessageID() {
