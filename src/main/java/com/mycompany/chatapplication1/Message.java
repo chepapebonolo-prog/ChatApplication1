@@ -130,4 +130,8 @@ public class Message {
     public String getMessageID() {
         return messageID;
     }
+     // Sets the message ID so the unit tests can use a fixed one
+    public void setMessageID(String messageID) {
+        this.messageID = messageID;
+    }   
 }
