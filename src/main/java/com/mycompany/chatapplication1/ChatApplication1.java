@@ -1,7 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
-
 package com.mycompany.chatapplication1;
 
 /**
@@ -9,16 +8,16 @@ package com.mycompany.chatapplication1;
  * @author Student
  */
 // Display main menu options
-
 import java.util.Scanner;
 // Process user menu selection
+
 public class ChatApplication1 {
-    
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         User user = new User();
         boolean running = true;
-        
+
         while (running) {
             System.out.println("\n========================================");
             System.out.println("        CHAT APPLICATION - MENU         ");
@@ -27,7 +26,7 @@ public class ChatApplication1 {
             System.out.println("2. Login");
             System.out.println("3. Exit");
             System.out.print("Select option: ");
-            
+
             String choice = scanner.nextLine();
             // Close scanner resource
             switch (choice) {
@@ -48,41 +47,46 @@ public class ChatApplication1 {
         // Collect user registration details
         scanner.close();
     }
-    
+
     private static void register(Scanner scanner, User user) {
         System.out.println("\n--- Register ---");
         System.out.print("Username: ");
         String username = scanner.nextLine();
-        
+
         // Handle user login process
         System.out.print("Password: ");
         String password = scanner.nextLine();
-        
+
         System.out.print("Cell Phone: ");
         String cellPhone = scanner.nextLine();
-        
+
         String result = user.registerUser(username, password, cellPhone);
         System.out.println("\n" + result);
     }
-    
+
     private static void login(Scanner scanner, User user) {
         System.out.println("\n--- Login ---");
         System.out.print("Username: ");
         String username = scanner.nextLine();
-        
+
         System.out.print("Password: ");
         String password = scanner.nextLine();
-        
+
         boolean isLoggedIn = user.loginUser(username, password);
         String result = user.returnLoginStatus(isLoggedIn);
         System.out.println("\n" + result);
-                if (isLoggedIn) {
+        if (isLoggedIn) {
             quickChat(scanner);
         }
     }
-        // Runs the QuickChat menu after a successful login
+    // Runs the QuickChat menu after a successful login
+
     private static void quickChat(Scanner scanner) {
         System.out.println("\nWelcome to QuickChat.");
+        // Asks how many messages the user wants to enter
+        System.out.print("How many messages do you want to enter? ");
+        int numMessages = Integer.parseInt(scanner.nextLine());
+        int messagesEntered = 0;
         boolean chatting = true;
         while (chatting) {
             System.out.println("\n1) Send Messages");
