@@ -81,4 +81,27 @@ public class MessageTest {
         message.addToSent();
         assertEquals(1, Message.returnTotalMessages());
     }
+        // Message of exactly 250 characters is still accepted
+    @Test
+    public void testMessageLengthBoundary() {
+        String text = "";
+        for (int i = 0; i < 250; i++) {
+            text = text + "a";
+        }
+        Message message = new Message(0, "+27718693002", text);
+        assertEquals("Message ready to send.", message.checkMessageLength());
+    }
+
+    // Full details are returned in the order ID, hash, recipient, message
+    @Test
+    public void testMessageDetails() {
+        Message message = new Message(0, "+27718693002", "Hi Mike, can you join us for dinner tonight?");
+        message.setMessageID("0012345678");
+        message.createMessageHash();
+        String expected = "Message ID: 0012345678\n"
+                + "Message Hash: 00:0:HITONIGHT\n"
+                + "Recipient: +27718693002\n"
+                + "Message: Hi Mike, can you join us for dinner tonight?";
+        assertEquals(expected, message.messageDetails());
+    }
 }
