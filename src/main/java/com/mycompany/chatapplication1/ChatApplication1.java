@@ -103,6 +103,7 @@ public class ChatApplication1 {
                 if (messagesEntered < numMessages) {
                     Message message = enterMessage(scanner, messagesEntered);
                     message.createMessageHash();
+                    message.addToIdAndHashLists();
                     System.out.println("Message ID generated: " + message.getMessageID());
                     // Lets the user send, disregard or store the message
                     System.out.println("1) Send Message");
@@ -113,15 +114,17 @@ public class ChatApplication1 {
                     System.out.println(message.sentMessage(sendChoice));
                     if (sendChoice == 1) {
                         message.addToSent();
-                     // Shows the full details of the sent message
+                        message.addToSentList();
+                        // Shows the full details of the sent message
                         System.out.println(message.messageDetails());
                     } else if (sendChoice == 2) {
+                        message.addToDisregardedList();
                         scanner.nextLine();
                     } else if (sendChoice == 3) {
                         message.storeMessage();
                     }
                     messagesEntered = messagesEntered + 1;
-                                        // Shows the total sent once all the messages have been entered
+                    // Shows the total sent once all the messages have been entered
                     if (messagesEntered == numMessages) {
                         System.out.println("Total messages sent: " + Message.returnTotalMessages());
                     }
