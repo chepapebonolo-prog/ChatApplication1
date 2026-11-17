@@ -18,14 +18,29 @@ public class Message {
            // Holds the details of every message sent while the program runs
     private static String sentMessages = "";
     // Counts the messages sent
-    private static int totalSent = 0; 
+    private static int totalSent = 0;
+        // Adds this message to the sent array
+    public void addToSentList() {
+        sentList.add(this);
+    }
+
+    // Adds this message to the disregarded array
+    public void addToDisregardedList() {
+        disregardedList.add(this);
+    }
+
+    // Records this message's ID and hash in their arrays
+    public void addToIdAndHashLists() {
+        idList.add(messageID);
+        hashList.add(messageHash);
+    }
         // Arrays holding the sent, disregarded and stored messages
     private static ArrayList<Message> sentList = new ArrayList<>();
     private static ArrayList<Message> disregardedList = new ArrayList<>();
     private static ArrayList<Message> storedList = new ArrayList<>();
     // Arrays holding every message hash and message ID
     private static ArrayList<String> hashList = new ArrayList<>();
-    private static ArrayList<String> idList = new ArrayList<>();
+    private static ArrayList<String> idList = new ArrayList<>();  
     // Creates a message and generates a random 10-digit ID
     public Message(int messageNumber, String recipient, String messageText) {
         Random random = new Random();
