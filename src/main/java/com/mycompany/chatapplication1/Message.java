@@ -192,6 +192,52 @@ public class Message {
         int start = line.indexOf(key) + key.length();
         return line.substring(start, line.indexOf("\"", start));
     }
+    
+        // Returns the longest message from the sent and stored arrays
+    public static String longestMessage() {
+        String longest = "";
+        for (int i = 0; i < sentList.size(); i++) {
+            if (sentList.get(i).messageText.length() > longest.length()) {
+                longest = sentList.get(i).messageText;
+            }
+        }
+        for (int i = 0; i < storedList.size(); i++) {
+            if (storedList.get(i).messageText.length() > longest.length()) {
+                longest = storedList.get(i).messageText;
+            }
+        }
+        return longest;
+    }
+
+    // Finds a message by its ID and returns the message text
+    public static String searchByID(String id) {
+        for (int i = 0; i < sentList.size(); i++) {
+            if (sentList.get(i).messageID.equals(id)) {
+                return sentList.get(i).messageText;
+            }
+        }
+        for (int i = 0; i < storedList.size(); i++) {
+            if (storedList.get(i).messageID.equals(id)) {
+                return storedList.get(i).messageText;
+            }
+        }
+        return "Message ID not found.";
+    }
+
+    // Finds a message by its ID and returns the recipient
+    public static String searchRecipientByID(String id) {
+        for (int i = 0; i < sentList.size(); i++) {
+            if (sentList.get(i).messageID.equals(id)) {
+                return sentList.get(i).recipient;
+            }
+        }
+        for (int i = 0; i < storedList.size(); i++) {
+            if (storedList.get(i).messageID.equals(id)) {
+                return storedList.get(i).recipient;
+            }
+        }
+        return "Message ID not found.";
+    }
     // Returns the full details of this message
 
     public String messageDetails() {
