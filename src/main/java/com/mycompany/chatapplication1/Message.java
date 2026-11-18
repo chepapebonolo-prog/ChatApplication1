@@ -192,8 +192,8 @@ public class Message {
         int start = line.indexOf(key) + key.length();
         return line.substring(start, line.indexOf("\"", start));
     }
-    
-        // Returns the longest message from the sent and stored arrays
+
+    // Returns the longest message from the sent and stored arrays
     public static String longestMessage() {
         String longest = "";
         for (int i = 0; i < sentList.size(); i++) {
@@ -237,6 +237,119 @@ public class Message {
             }
         }
         return "Message ID not found.";
+    }
+    // Adds this message to the stored array
+
+    public void addToStoredList() {
+        storedList.add(this);
+    }
+
+    // Returns this message's hash
+    public String getMessageHash() {
+        return messageHash;
+    }
+
+    // Empties all the arrays
+    public static void clearLists() {
+        sentList.clear();
+        disregardedList.clear();
+        storedList.clear();
+        hashList.clear();
+        idList.clear();
+    }
+
+    // Returns the text of every sent message
+    public static String sentTexts() {
+        String result = "";
+        for (int i = 0; i < sentList.size(); i++) {
+            if (i > 0) {
+                result = result + ", ";
+            }
+            result = result + sentList.get(i).messageText;
+        }
+        return result;
+    }
+
+    // Returns every sent or stored message for a recipient, one per line
+    public static String searchByRecipient(String recipient) {
+        String result = "";
+        for (int i = 0; i < sentList.size(); i++) {
+            if (sentList.get(i).recipient.equals(recipient)) {
+                result = result + sentList.get(i).messageText + "\n";
+            }
+        }
+        for (int i = 0; i < storedList.size(); i++) {
+            if (storedList.get(i).recipient.equals(recipient)) {
+                result = result + storedList.get(i).messageText + "\n";
+            }
+        }
+        if (result.equals("")) {
+            return "No messages found for this recipient.";
+        }
+        return result.trim();
+    }
+
+    // Deletes a stored message using its hash and updates the JSON file
+    public static String deleteByHash(String hash) {
+        for (int i = 0; i < storedList.size(); i++) {
+            if (storedList.get(i).messageHash.equals(hash)) {
+                String text = storedList.get(i).messageText;
+                storedList.remove(i);
+                saveAllStored();
+                return "Message: \"" + text + "\" successfully deleted.";
+            }
+        }
+        return "Message hash not found.";
+    }
+
+    // Rewrites messages.json using the stored array
+    private static void saveAllStored() {
+        try {
+            FileWriter writer = new FileWriter("messages.json");
+            for (int i = 0; i < storedList.size(); i++) {
+                Message m = storedList.get(i);
+                String safeText = m.messageText.replace("\"", "\\\"");
+                writer.write("{\"messageID\": \"" + m.messageID + "\", \"messageHash\": \"" + m.messageHash
+                        + "\", \"recipient\": \"" + m.recipient + "\", \"message\": \"" + safeText + "\"}\n");
+            }
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Could not update the stored messages file.");
+        }
+    }
+
+    // Returns the hash, recipient and message of every sent message
+    public static String sentReport() {
+        String report = "";
+        for (int i = 0; i < sentList.size(); i++) {
+            Message m = sentList.get(i);
+            report = report + "Message Hash: " + m.messageHash + "\n"
+                    + "Recipient: " + m.recipient + "\n"
+                    + "Message: " + m.messageText + "\n\n";
+        }
+        return report;
+    }
+
+    // Returns the full details of every stored message
+    public static String storedReport() {
+        String report = "";
+        for (int i = 0; i < storedList.size(); i++) {
+            Message m = storedList.get(i);
+            report = report + "Message ID: " + m.messageID + "\n"
+                    + "Message Hash: " + m.messageHash + "\n"
+                    + "Recipient: " + m.recipient + "\n"
+                    + "Message: " + m.messageText + "\n\n";
+        }
+        return report;
+    }
+
+    // Returns the recipient of every stored message, one per line
+    public static String storedRecipients() {
+        String result = "";
+        for (int i = 0; i < storedList.size(); i++) {
+            result = result + "Recipient: " + storedList.get(i).recipient + "\n";
+        }
+        return result;
     }
     // Returns the full details of this message
 
