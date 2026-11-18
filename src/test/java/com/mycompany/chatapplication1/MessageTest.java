@@ -7,6 +7,7 @@ package com.mycompany.chatapplication1;
 import com.mycompany.chatapplication1.Message;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 public class MessageTest {
 
@@ -103,5 +104,85 @@ public class MessageTest {
                 + "Recipient: +27718693002\n"
                 + "Message: Hi Mike, can you join us for dinner tonight?";
         assertEquals(expected, message.messageDetails());
+    }
+    
+        // Starts each test with empty arrays
+    @BeforeEach
+    public void setUp() {
+        Message.clearLists();
+    }
+
+    // Loads the five test messages from the brief into the arrays
+    private void loadTestData() {
+        Message m1 = new Message(0, "+27834557896", "Did you get the cake?");
+        m1.setMessageID("1000000001");
+        m1.createMessageHash();
+        m1.addToSentList();
+
+        Message m2 = new Message(1, "+27838884567", "Where are you? You are late! I have asked you to be on time.");
+        m2.setMessageID("1000000002");
+        m2.createMessageHash();
+        m2.addToStoredList();
+
+        Message m3 = new Message(2, "+27834484567", "Yohoooo, I am at your gate.");
+        m3.setMessageID("1000000003");
+        m3.createMessageHash();
+        m3.addToDisregardedList();
+
+        Message m4 = new Message(3, "0838884567", "It is dinner time!");
+        m4.setMessageID("0838884567");
+        m4.createMessageHash();
+        m4.addToSentList();
+
+        Message m5 = new Message(4, "+27838884567", "Ok, I am leaving without you.");
+        m5.setMessageID("1000000005");
+        m5.createMessageHash();
+        m5.addToStoredList();
+    }
+
+    // Sent messages array holds the two sent messages
+    @Test
+    public void testSentMessagesArray() {
+        loadTestData();
+        assertEquals("Did you get the cake?, It is dinner time!", Message.sentTexts());
+    }
+
+    // Longest message is found across the sent and stored messages
+    @Test
+    public void testLongestMessage() {
+        loadTestData();
+        assertEquals("Where are you? You are late! I have asked you to be on time.", Message.longestMessage());
+    }
+
+    // Search by message ID returns the message text
+    @Test
+    public void testSearchByID() {
+        loadTestData();
+        assertEquals("It is dinner time!", Message.searchByID("0838884567"));
+    }
+
+    // Search by recipient returns all of that recipient's messages
+    @Test
+    public void testSearchByRecipient() {
+        loadTestData();
+        assertEquals("Where are you? You are late! I have asked you to be on time.\nOk, I am leaving without you.",
+                Message.searchByRecipient("+27838884567"));
+    }
+
+    // Delete by hash removes the stored message
+    @Test
+    public void testDeleteByHash() {
+        loadTestData();
+        assertEquals("Message: \"Where are you? You are late! I have asked you to be on time.\" successfully deleted.",
+                Message.deleteByHash("10:1:WHERETIME"));
+    }
+
+    // Report shows the hash, recipient and message of the sent messages
+    @Test
+    public void testSentReport() {
+        loadTestData();
+        String expected = "Message Hash: 10:0:DIDCAKE\nRecipient: +27834557896\nMessage: Did you get the cake?\n\n"
+                + "Message Hash: 08:3:ITTIME\nRecipient: 0838884567\nMessage: It is dinner time!\n\n";
+        assertEquals(expected, Message.sentReport());
     }
 }
