@@ -92,17 +92,21 @@ public class ChatApplication1 {
             System.out.println("\n1) Send Messages");
             System.out.println("2) Show recently sent messages");
             System.out.println("3) Quit");
+            System.out.println("4) Stored Messages");
             System.out.print("Select option: ");
             String option = scanner.nextLine();
             if (option.equals("2")) {
                 System.out.println("Coming Soon.");
             } else if (option.equals("3")) {
                 chatting = false;
+            } else if (option.equals("4")) {
+                storedMessagesMenu(scanner);
             } else if (option.equals("1")) {
                 // Collects a message and shows its generated ID
                 if (messagesEntered < numMessages) {
                     Message message = enterMessage(scanner, messagesEntered);
                     message.createMessageHash();
+                    message.addToIdAndHashLists();
                     System.out.println("Message ID generated: " + message.getMessageID());
                     // Lets the user send, disregard or store the message
                     System.out.println("1) Send Message");
@@ -113,15 +117,17 @@ public class ChatApplication1 {
                     System.out.println(message.sentMessage(sendChoice));
                     if (sendChoice == 1) {
                         message.addToSent();
-                     // Shows the full details of the sent message
+                        message.addToSentList();
+                        // Shows the full details of the sent message
                         System.out.println(message.messageDetails());
                     } else if (sendChoice == 2) {
+                        message.addToDisregardedList();
                         scanner.nextLine();
                     } else if (sendChoice == 3) {
                         message.storeMessage();
                     }
                     messagesEntered = messagesEntered + 1;
-                                        // Shows the total sent once all the messages have been entered
+                    // Shows the total sent once all the messages have been entered
                     if (messagesEntered == numMessages) {
                         System.out.println("Total messages sent: " + Message.returnTotalMessages());
                     }
@@ -149,6 +155,47 @@ public class ChatApplication1 {
             if (cellResult.equals("Cell phone number successfully captured.")
                     && lengthResult.equals("Message ready to send.")) {
                 return message;
+            }
+        }
+    }
+    // Shows the Stored Messages menu and runs the chosen action
+
+    private static void storedMessagesMenu(Scanner scanner) {
+        Message.loadStoredMessages();
+        boolean viewing = true;
+        while (viewing) {
+            System.out.println("\n--- Stored Messages ---");
+            System.out.println("1) Display the sender and recipient of all stored messages");
+            System.out.println("2) Display the longest message");
+            System.out.println("3) Search for a message ID");
+            System.out.println("4) Search for all messages to a recipient");
+            System.out.println("5) Delete a message using its hash");
+            System.out.println("6) Display the stored messages report");
+            System.out.println("7) Back");
+            System.out.print("Select option: ");
+            String choice = scanner.nextLine();
+            if (choice.equals("1")) {
+                System.out.println("Sender: You");
+                System.out.println(Message.storedRecipients());
+            } else if (choice.equals("2")) {
+                System.out.println(Message.longestMessage());
+            } else if (choice.equals("3")) {
+                System.out.print("Message ID: ");
+                String id = scanner.nextLine();
+                System.out.println("Recipient: " + Message.searchRecipientByID(id));
+                System.out.println("Message: " + Message.searchByID(id));
+            } else if (choice.equals("4")) {
+                System.out.print("Recipient: ");
+                System.out.println(Message.searchByRecipient(scanner.nextLine()));
+            } else if (choice.equals("5")) {
+                System.out.print("Message hash: ");
+                System.out.println(Message.deleteByHash(scanner.nextLine()));
+            } else if (choice.equals("6")) {
+                System.out.println(Message.storedReport());
+            } else if (choice.equals("7")) {
+                viewing = false;
+            } else {
+                System.out.println("Invalid choice");
             }
         }
     }
